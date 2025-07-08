@@ -2,26 +2,27 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>拉起朴朴支付</title>
-  <script>
-    window.onload = function () {
-      const orderStr = `alipay_sdk=alipay-sdk-java-4.39.2.ALL&app_id=2016071401616982&biz_content=%7B%22body%22%3A%22%7B%5C%22pay_type%5C%22%3A10%7D%22%2C%22out_trade_no%22%3A%22GF8041981752001154001PAY01%22%2C%22passback_params%22%3A%22%257B%2522pay_type%2522%253A10%252C%2522channel_type%2522%253A10%257D%22%2C%22seller_id%22%3A%22pay%40pupumall.com%22%2C%22subject%22%3A%22%E6%9C%B4%E6%9C%B4%E7%94%B5%E5%AD%90%E5%8D%A1%E8%AE%A2%E5%8D%95%22%2C%22time_expire%22%3A%222025-07-09+03%3A09%22%2C%22total_amount%22%3A%2210.00%22%7D&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fpaynotify-tx.pupuapi.com%2Fclient%2Fpayment%2Fpay%2Fnotify%2FpayTypes%2F10%2FchannelTypes%2F10%2FGF8041981752001154001PAY01&sign=joojyrjVCX9zKOfEkHoTZ7AY3oiV6ZD%2Fb4xZERpUamp%2FwI2SAxCVRlCd4wR2xwDD1HvfisU6Zki%2FDd8bJHPk9nk%2FlZ%2F3BlWV0pe7CH3eFOCBmopx9I%2BJTUuwjpvcbEWMvCuS2wGP5%2FCYxDRTKynA5%2FcYsEdu51Bm7uYTcJewQic%3D&sign_type=RSA&timestamp=2025-07-09+02%3A59%3A14&version=1.0`;
-
-      const bizcontext = encodeURIComponent(JSON.stringify({
-        appkey: "2016071401616982",   // 与 app_id 保持一致或为绑定的真实应用 appkey
-        ty: "and_lite",
-        sv: "4.35.37",
-        an: "com.pupumall.app",       // ⚠️ 理想情况应为朴朴的真实包名，猜测值
-        av: "5.5.8"                   // 可随实际版本改动
-      }));
-
-      const schemeUrl = `alipays://platformapi/startApp?appId=20000125&orderSuffix=${encodeURIComponent(orderStr)}&bizcontext=${bizcontext}`;
-      console.log("🚀 跳转链接：", schemeUrl);
-      window.location.href = schemeUrl;
-    };
-  </script>
+  <title>支付宝网页支付跳转</title>
+  <style>
+    textarea { width: 100%; height: 160px; font-size: 14px; }
+    button { padding: 10px 20px; margin-top: 1em; font-size: 16px; }
+  </style>
 </head>
 <body>
-  <h2>正在跳转到朴朴支付宝支付...</h2>
+  <h2>粘贴你拿到的支付宝 SDK 参数</h2>
+  <textarea id="sdk"></textarea><br>
+  <button onclick="buildWapPay()">转换并跳转</button>
+
+  <script>
+    function buildWapPay() {
+      const sdk = document.getElementById("sdk").value.trim();
+      if (!sdk.includes("app_id=")) return alert("请输入 SDK 参数字符串");
+
+      const baseUrl = "https://openapi.alipay.com/gateway.do?";
+      const fullUrl = baseUrl + sdk;
+      console.log("跳转链接：", fullUrl);
+      window.location.href = fullUrl;
+    }
+  </script>
 </body>
 </html>
