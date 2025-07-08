@@ -2,14 +2,18 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>拉起支付宝支付（伪UA）</title>
-  <script>
-    // 修改 UA（仅页面内有效）
-    navigator.__defineGetter__('userAgent', function () {
-      return "AlipayClient/10.2.32.6000 (Linux; U; Android 12; zh-Hans-CN; MI 11; Build/SKQ1.211006.001)";
-    });
+  <title>跳转支付宝支付</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; text-align: center; }
+    button { font-size: 20px; padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h2>点击下方按钮唤起支付宝</h2>
+  <button onclick="openAlipay()">立即支付</button>
 
-    window.onload = function () {
+  <script>
+    function openAlipay() {
       const orderString = `alipay_sdk=alipay-sdk-java-4.39.2.ALL&app_id=2016071401616982&biz_content=%7B%22body%22%3A%22%7B%5C%22pay_type%5C%22%3A10%7D%22%2C%22out_trade_no%22%3A%22GF8041981751999718001PAY01%22%2C%22passback_params%22%3A%22%257B%2522pay_type%2522%253A10%252C%2522channel_type%2522%253A10%257D%22%2C%22seller_id%22%3A%22pay%40pupumall.com%22%2C%22subject%22%3A%22%E6%9C%B4%E6%9C%B4%E7%94%B5%E5%AD%90%E5%8D%A1%E8%AE%A2%E5%8D%95%22%2C%22time_expire%22%3A%222025-07-09+02%3A45%22%2C%22total_amount%22%3A%2210.00%22%7D&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Fpaynotify-tx.pupuapi.com%2Fclient%2Fpayment%2Fpay%2Fnotify%2FpayTypes%2F10%2FchannelTypes%2F10%2FGF8041981751999718001PAY01&sign=s7ttIf%2FRyvx5Cv7dH3ybPmfLou6d0i98YPXvALmqo%2FZFpnFpfJJAxd4IuR2uvEzVhZyAOe6BRxyuf34F6ZgcuQmbniGKz2qSHFSZSIMsfb0jG3HDWzmWRVF7sfP4vycR9jLD252ucRc6kozu6YIKx9apBjMrh6nPOWWHdkcHHBI%3D&sign_type=RSA&timestamp=2025-07-09+02%3A35%3A19&version=1.0`;
 
       const bizcontext = encodeURIComponent(JSON.stringify({
@@ -22,15 +26,18 @@
 
       const schemeUrl = `alipays://platformapi/startApp?appId=20000125&orderSuffix=${encodeURIComponent(orderString)}&bizcontext=${bizcontext}`;
 
-      // 用用户点击触发，避免自动跳转被拦
-      document.getElementById('payBtn').onclick = function () {
-        location.href = schemeUrl;
-      };
-    };
+      // 用 iframe 拉起以兼容安卓
+      const iframe = document.createElement('iframe');
+      iframe.src = schemeUrl;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      // 设置 2 秒后跳转备用页面或提示
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        alert("如果未跳转，请确认已安装支付宝，或复制链接手动打开。");
+      }, 2000);
+    }
   </script>
-</head>
-<body>
-  <h2>点击按钮跳转支付宝</h2>
-  <button id="payBtn">立即支付</button>
 </body>
 </html>
