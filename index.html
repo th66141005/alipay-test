@@ -1,26 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>唤起支付宝支付</title>
+    <meta charset="UTF-8">
+    <title>唤起微信支付</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            padding: 16px 32px;
+            font-size: 18px;
+            border: none;
+            background-color: #07c160;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #06a150;
+        }
+    </style>
 </head>
 <body>
-  <h3>输入 SDK Order String：</h3>
-  <textarea id="orderStr" style="width:100%;height:150px;"></textarea><br><br>
-  <button onclick="jump()">拉起支付宝支付</button>
+    <button onclick="launchPay()">唤起支付</button>
 
-  <script>
-    function jump() {
-      let str = document.getElementById('orderStr').value.trim();
-      if (!str) return alert("请输入 order string");
-
-      // URL 编码
-      let encoded = encodeURIComponent(str);
-      
-      // 拼接唤起链接
-      let url = "alipays://platformapi/startApp?appId=20000125&orderSuffix=" + encoded;
-      location.href = url;
-    }
-  </script>
+    <script>
+        function launchPay() {
+            window.location.href = 'https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx190419280584775f1e8fadfd53b9da0000&package=3383006053';
+        }
+    </script>
 </body>
 </html>
