@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>唤起微信支付</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-        button {
-            padding: 16px 32px;
-            font-size: 18px;
-            border: none;
-            background-color: #07c160;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #06a150;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>唤起支付宝支付</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      text-align: center;
+      padding-top: 100px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:active {
+      background-color: #0088cc;
+    }
+  </style>
 </head>
 <body>
-    <button onclick="launchPay()">唤起支付</button>
 
-    <script>
-        function launchPay() {
-            window.location.href = 'https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx190419280584775f1e8fadfd53b9da0000&package=3383006053';
-        }
-    </script>
+  <h2>点击按钮唤起支付宝支付</h2>
+  <button onclick="openAlipay()">立即支付</button>
+
+  <script>
+    function openAlipay() {
+      window.location.href = "alipays://platformapi/startapp?appId=20000067&url=https%3A%2F%2Fsyb.allinpay.com%2Fapiweb%2Fh5unionpay%2Funionnative%3Ftoken%3DjVFUuUov90oI6t8JiGWpCgI16pdbscHiBiJiVUg367pvw0WZPTlr30vaymIdBLewszZY75QyFb1ohHIm2nzfstVkyxrRm1FM0i6NVmgOlKhqOHMlPlbV6KUMjgKCsEmDsxOx9q55UI0mwseJxmrKUMXT0I";
+    }
+  </script>
+
 </body>
 </html>
